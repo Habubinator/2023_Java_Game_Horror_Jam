@@ -10,8 +10,10 @@ public class GamePanel extends JPanel implements Runnable{
     final int tileSize = originalTileSize * scale; // 48x48
     final int maxScreenCol = 16;
     final int maxScreenRow = 9;
-    final int screenWidth = tileSize * maxScreenCol; // 768
-    final int screenHeight = tileSize * maxScreenRow; // 432
+    //final int screenWidth = tileSize * maxScreenCol; // 768
+    final int screenWidth = 1280;
+    //final int screenHeight = tileSize * maxScreenRow; // 432
+    final int screenHeight = 720;
     Thread gameThread;
 
     public GamePanel(){
@@ -27,6 +29,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-
+        while (gameThread != null ){
+            System.out.println("Running");
+        }
     }
 }
