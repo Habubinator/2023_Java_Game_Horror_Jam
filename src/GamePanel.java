@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -13,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyHandler = new KeyHandler();
 
     String currentMode = "novel";
-    Player2D player2d = new Player2D();
+    Player2D player2d = new Player2D(this,keyHandler);
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -50,14 +51,17 @@ public class GamePanel extends JPanel implements Runnable{
     }
     public void update(){
         if(Objects.equals(currentMode, "novel")){
-            player2d.move(keyHandler);
+            player2d.update();
         }
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.white);
-        g2.fillRect(100,100,48, 48);
+        // draw background
+        player2d.draw(g2);
+        // draw front
+
+        //clear buffer
         g2.dispose();
     }
 }
