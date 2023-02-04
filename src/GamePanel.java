@@ -1,25 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable{
 
     // SCREEN SETTINGS
-    final int originalTileSize = 16;
-    final int scale = 3;
-
-    final int tileSize = originalTileSize * scale; // 48x48
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 9;
-    //final int screenWidth = tileSize * maxScreenCol; // 768
     final int screenWidth = 1280;
-    //final int screenHeight = tileSize * maxScreenRow; // 432
     final int screenHeight = 720;
+    int FPS = 60;
+    double drawInterval = 1000000000/FPS;
     Thread gameThread;
+    KeyHandler keyHandler = new KeyHandler();
+
+    String currentMode = "novel";
+    Player2D player2d = new Player2D();
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+        this.addKeyListener(keyHandler);
+        this.setFocusable(true);
     }
 
     public void startGameThread(){
@@ -29,8 +30,34 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
+        double nextDrawTime = System.nanoTime() + drawInterval;
         while (gameThread != null ){
-            System.out.println("Running");
+            // UPDATE
+            update();
+            // DRAW
+            repaint();
+            double remainingTime = nextDrawTime - System.nanoTime();
+            remainingTime /= 1000000;
+            if (remainingTime>=0){
+                try {
+                    Thread.sleep((long)remainingTime); // Принимает милисекунды
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            nextDrawTime +=drawInterval;
         }
+    }
+    public void update(){
+        if(Objects.equals(currentMode, "novel")){
+            player2d.move(keyHandler);
+        }
+    }
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.white);
+        g2.fillRect(100,100,48, 48);
+        g2.dispose();
     }
 }
