@@ -1,3 +1,5 @@
+package novel;
+
 import javax.swing.*;
 
 public class Main {

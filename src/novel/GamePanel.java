@@ -1,7 +1,9 @@
+package novel;
+
+import dungeon.Dungeon;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -12,9 +14,9 @@ public class GamePanel extends JPanel implements Runnable{
     double drawInterval = 1000000000/FPS;
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
-
-    String currentMode = "novel";
-    Player2D player2d = new Player2D(this,keyHandler);
+    Dungeon dungeon;
+    String currentMode = "dungeon"; // novel - dungeon
+    Player2D player2d;
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -22,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+        start();
     }
 
     public void startGameThread(){
@@ -33,10 +36,12 @@ public class GamePanel extends JPanel implements Runnable{
     public void run() {
         double nextDrawTime = System.nanoTime() + drawInterval;
         while (gameThread != null ){
+
             // UPDATE
             update();
             // DRAW
             repaint();
+
             double remainingTime = nextDrawTime - System.nanoTime();
             remainingTime /= 1000000;
             if (remainingTime>=0){
@@ -49,18 +54,49 @@ public class GamePanel extends JPanel implements Runnable{
             nextDrawTime +=drawInterval;
         }
     }
+
+    public void start(){
+        dungeon = new Dungeon(1, this, keyHandler);
+        player2d = new Player2D(this,keyHandler);
+    }
+
     public void update(){
-        if(Objects.equals(currentMode, "novel")){
-            player2d.update();
+        switch (currentMode){
+            case "novel":
+                player2d.update();
+                break;
+            case "dungeon":
+                dungeon.player.update();
+                break;
         }
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         // draw background
-        player2d.draw(g2);
-        // draw front
+        switch (currentMode){
+            case "novel":
+                break;
+            case "dungeon":
+                break;
+        }
 
+        // draw game
+        switch (currentMode){
+            case "novel":
+                player2d.draw(g2);
+                break;
+            case "dungeon":
+                break;
+        }
+
+        // draw front
+        switch (currentMode){
+            case "novel":
+                break;
+            case "dungeon":
+                break;
+        }
         //clear buffer
         g2.dispose();
     }
