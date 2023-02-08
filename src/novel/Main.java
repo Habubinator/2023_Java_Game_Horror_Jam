@@ -13,11 +13,12 @@ public class Main {
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
 
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //window.setUndecorated(true);
+        window.setVisible(true);
         window.pack();
 
         window.setLocationRelativeTo(null);
-        window.setVisible(true);
-
         gamePanel.startGameThread();
     }
 }

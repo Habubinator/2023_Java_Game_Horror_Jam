@@ -161,7 +161,7 @@ public class Player {
                     }
             }
             nextMoveTime = System.currentTimeMillis() + moveInterval;
-            drawMap();
+            drawMap(); // КОНСОЛЬНЫЙ ВЫВОД
             checkStatus();
             System.out.println("Players coord ="+x+"-"+y+", direction - "+direction);
         }

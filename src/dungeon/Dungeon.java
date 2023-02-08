@@ -13,7 +13,7 @@ public class Dungeon {
     Map map;
 
     public Dungeon(int id, GamePanel gp,KeyHandler keyHandler){
-        File file = new File("src/dungeon/maps/map-1.txt");
+        File file = new File("src/dungeon/maps/map-"+id+".txt");
         if (id == 1){
             player = new Player(gp,keyHandler,this,1, 2, "North",null,null);
             BufferedReader br;

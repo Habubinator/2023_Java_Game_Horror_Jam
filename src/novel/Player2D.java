@@ -11,9 +11,14 @@ public class Player2D {
     int speed = 5;
     GamePanel gp;
     KeyHandler keyHandler;
+    double dialogueInputInterval = 400;
+    double nextSkipTime = 0;
+    Entity SpeakingEntity;
 
     //TODO Спрайт - анимации
     public BufferedImage sprite;
+
+    // TODO Спрайты реагируют на сторону движения - отзеркаливание спрайтов
     public String direction = "right"; // left\right
 
     public Player2D(GamePanel gp, KeyHandler keyHandler){
@@ -27,12 +32,14 @@ public class Player2D {
             direction = "left";
             x -= speed;
         } else
-            if (key.right_Pressed) {
-                direction = "right";
-                x += speed;
+        if (key.right_Pressed) {
+            direction = "right";
+            x += speed;
         } else if (key.use_Pressed) {
+            if(System.currentTimeMillis()>nextSkipTime){
                 use();
             }
+        }
     }
     public void getImage(){
         try{
@@ -43,10 +50,38 @@ public class Player2D {
     }
     // TODO Сделать диалоговые окна
     public void use(){
-        // TODO Когда игрок возле точки интереса то при использовании сделать вывод диалогового окна
+        for (Entity temp:
+             gp.novelLevel.entities) {
+            if (this.x >=  temp.x - temp.activationWidth/2 &&
+                this.x <=  temp.x + temp.activationWidth/2){
+                gp.isDialogue = true;
+                SpeakingEntity = temp;
+                SpeakingEntity.speak();
+                SpeakingEntity.incrementMsgCounter();
+            }
+        }
+
+        nextSkipTime = System.currentTimeMillis() + dialogueInputInterval;
+    }
+    public void skipMessage(KeyHandler keyHandler){
+        if (keyHandler.use_Pressed){
+            //do something
+            SpeakingEntity.speak();
+            SpeakingEntity.incrementMsgCounter();
+            if (SpeakingEntity.messageCounter == SpeakingEntity.dialogues.size()){
+                gp.isDialogue = false;
+            }
+            nextSkipTime = System.currentTimeMillis() + dialogueInputInterval;
+        }
     }
     public void update(){
-        move(keyHandler);
+        if (!gp.isDialogue){
+            move(keyHandler);
+        }else{
+            if(System.currentTimeMillis()>nextSkipTime){
+                skipMessage(keyHandler);
+            }
+        }
     }
     public void draw(Graphics2D g2){
         BufferedImage image = null;
