@@ -31,7 +31,10 @@ public class UI {
         y += 50;
         g2.drawString(currentTalking,x,y);
         y += 50;
-        g2.drawString(currentDialogue,x,y);
+        for(String line: currentDialogue.split("<br> ")){
+            g2.drawString(line,x,y);
+            y += 50;
+        }
     }
     public void drawSubWindow(int x, int y, int width, int height){
         Color c = new Color(50,50,60,200);
