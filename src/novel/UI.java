@@ -3,6 +3,7 @@ package novel;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class UI {
@@ -14,12 +15,12 @@ public class UI {
     public String currentDialogue = "";
     public UI(GamePanel gp) throws IOException, FontFormatException {
         this.gp = gp;
-        menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/BadComic-Regular.ttf"));
-        dialogueFont = Font.createFont(Font.TRUETYPE_FONT,new File("src/fonts/BadComic-Regular.ttf"));
+        dialogueFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/BadComic-Regular.otf"));
     }
+
     public void draw(Graphics2D g2){
         this.g2 = g2;
-        //g2.setFont(dialogueFont);
+        g2.setFont(dialogueFont);
 
         int x = 5;
         int y = 750 ;
