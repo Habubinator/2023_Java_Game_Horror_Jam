@@ -16,6 +16,7 @@ public class UI {
     public UI(GamePanel gp) throws IOException, FontFormatException {
         this.gp = gp;
         dialogueFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/BadComic-Regular.otf"));
+        menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/Centaur.ttf"));
     }
 
     public void draw(Graphics2D g2){
@@ -46,5 +47,18 @@ public class UI {
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5,y+5,width-10,height-10,5,5);
 
+    }
+
+    public void printText(Graphics2D g2,String text, int x, int y, Font font, int textStyle, int fontSize) {
+        g2.setFont(font);
+        g2.setFont(g2.getFont().deriveFont(textStyle,fontSize));
+        g2.setColor(Color.WHITE);
+        g2.drawString(text,x,y);
+    }
+    public void printText(Graphics2D g2,String text, int x, int y, Font font, int textStyle, int fontSize, Color color) {
+        g2.setFont(font);
+        g2.setFont(g2.getFont().deriveFont(textStyle,fontSize));
+        g2.setColor(color);
+        g2.drawString(text,x,y);
     }
 }

@@ -19,13 +19,14 @@ public class GamePanel extends JPanel implements Runnable{
     double drawInterval = 1000000000/FPS;
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
+    MainMenu mainMenu;
     Dungeon dungeon;
     String modeMainMenu = "mainmenu";
     String modeNovel = "novel";
     Boolean isDialogue = false;
     String modeDungeon = "dungeon";
     Level novelLevel;
-    String currentMode = modeNovel; // mainmenu - novel - dungeon
+    String currentMode = modeMainMenu; // mainmenu - novel - dungeon
     Player2D player2d;
     UI ui;
 
@@ -70,6 +71,8 @@ public class GamePanel extends JPanel implements Runnable{
         dungeon = new Dungeon(1, this, keyHandler);
         novelLevel = new Level(this,1);
         player2d = new Player2D(this,keyHandler);
+        mainMenu = new MainMenu(this);
+        this.addMouseListener(mainMenu);
         try {
             ui = new UI(this);
         } catch (IOException | FontFormatException e) {
@@ -80,6 +83,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
         switch (currentMode){
             case "mainmenu":
+                mainMenu.update();
                 break;
             case "novel":
                 player2d.update();
@@ -95,13 +99,6 @@ public class GamePanel extends JPanel implements Runnable{
         // draw background
         switch (currentMode){
             case "mainmenu":
-                BufferedImage bgimage;
-                try {
-                    bgimage = ImageIO.read(new File("src/img/main menu background.png"));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                g.drawImage(bgimage, 0, 0, null);
                 break;
             case "novel":
                 break;
@@ -112,6 +109,8 @@ public class GamePanel extends JPanel implements Runnable{
         // draw game
         switch (currentMode){
             case "mainmenu":
+                // Title name
+                mainMenu.draw(g2);
                 break;
             case "novel":
                 for (Entity temp:

@@ -14,7 +14,7 @@ public class Main {
         window.add(gamePanel);
 
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //window.setUndecorated(true);
+        window.setUndecorated(true);
         window.setVisible(true);
         window.pack();
 

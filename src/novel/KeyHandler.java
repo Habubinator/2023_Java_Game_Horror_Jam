@@ -19,6 +19,7 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_S -> down_Pressed = true;
             case KeyEvent.VK_D -> right_Pressed = true;
             case KeyEvent.VK_E -> use_Pressed = true;
+            case KeyEvent.VK_ESCAPE -> System.exit(0);
         }
     }
 

@@ -2,8 +2,8 @@ package dungeon;
 
 import novel.GamePanel;
 import novel.KeyHandler;
+
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Dungeon {
@@ -11,10 +11,14 @@ public class Dungeon {
     public Player player;
     Tile[][] tiles = new Tile[10][10];
     Map map;
+    String subMod; // Создавать строчную переменную и вписывать сюда значения
+                   // для переключения управления между головоломками
 
-    public Dungeon(int id, GamePanel gp,KeyHandler keyHandler){
+    public Dungeon(int id, GamePanel gp, KeyHandler keyHandler){
+        // Считывание файла карты данжа
         File file = new File("src/dungeon/maps/map-"+id+".txt");
         if (id == 1){
+            // Инициализация игрока и считывание данных карты
             player = new Player(gp,keyHandler,this,1, 2, "North",null,null);
             BufferedReader br;
             try {
