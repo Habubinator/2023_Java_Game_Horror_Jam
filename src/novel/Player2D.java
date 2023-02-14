@@ -75,7 +75,7 @@ public class Player2D {
         }
     }
     public void update(){
-        if (!gp.isDialogue){
+        if (!gp.isDialogue && !gp.ui.isScreenBlack){
             move(keyHandler);
         }else{
             if(System.currentTimeMillis()>nextSkipTime){

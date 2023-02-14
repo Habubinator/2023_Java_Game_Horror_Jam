@@ -128,8 +128,9 @@ public class GamePanel extends JPanel implements Runnable{
             case "mainmenu":
                 break;
             case "novel":
+                ui.draw(g2);
                 if (this.isDialogue){
-                    ui.draw(g2);
+                    ui.drawWindow(g2);
                 }
                 break;
             case "dungeon":
@@ -145,6 +146,7 @@ public class GamePanel extends JPanel implements Runnable{
                 currentMode = modeMainMenu;
                 break;
             case 1:
+                mainMenu.clip.stop();
                 currentMode = modeNovel;
                 break;
             case 2:

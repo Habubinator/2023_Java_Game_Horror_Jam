@@ -7,7 +7,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("SPACENAME");
+        window.setTitle("Puzzle Cellar");
         window.setIconImage(null);
 
         GamePanel gamePanel = new GamePanel();

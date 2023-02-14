@@ -13,6 +13,8 @@ public class UI {
     public boolean messageOn = false;
     public String currentTalking = "";
     public String currentDialogue = "";
+    public int blackScreenOpacity = 255;
+    public boolean isScreenBlack = false;
     public UI(GamePanel gp) throws IOException, FontFormatException {
         this.gp = gp;
         dialogueFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/BadComic-Regular.otf"));
@@ -21,8 +23,23 @@ public class UI {
 
     public void draw(Graphics2D g2){
         this.g2 = g2;
+        blackScreen(g2);
+        if (this.isScreenBlack){
+            if (this.blackScreenOpacity<255){
+                blackScreenOpacity +=1;
+            }
+        }else if (this.blackScreenOpacity>=1){
+            blackScreenOpacity -= 1;
+        }
+    }
+    public void blackScreen(Graphics2D g2){
+        this.g2 = g2;
+        g2.setColor(new Color(0,0,0,this.blackScreenOpacity));
+        g2.fillRect(0,0,1980,1200);
+    }
+    public void drawWindow(Graphics2D g2){
+        this.g2 = g2;
         g2.setFont(dialogueFont);
-
         int x = 5;
         int y = 750 ;
         int width = gp.screenWidth-70;

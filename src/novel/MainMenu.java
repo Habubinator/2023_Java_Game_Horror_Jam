@@ -34,9 +34,6 @@ public class MainMenu implements MouseListener {
     }
 
     public void update() {
-        if (gp.currentMode != gp.modeMainMenu){
-            clip.stop();
-        }
     }
 
     public void draw(Graphics2D g2) {
