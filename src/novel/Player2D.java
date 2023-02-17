@@ -4,19 +4,24 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Player2D {
-    int x = 0;
-    int y = 310;
+    int x = 150;
+    int y = 450;
     int speed = 5;
+    int animationPos = 0;
     GamePanel gp;
     KeyHandler keyHandler;
     double dialogueInputInterval = 400;
+    double animationFrameInterval = 80;
     double nextSkipTime = 0;
+    double nextFrameTime = 0;
     Entity SpeakingEntity;
 
     //TODO Спрайт - анимации
-    public BufferedImage sprite;
+    public BufferedImage[] spriteRight = new BufferedImage[6];
+    public BufferedImage[] spriteLeft = new BufferedImage[6];
 
     // TODO Спрайты реагируют на сторону движения - отзеркаливание спрайтов
     public String direction = "right"; // left\right
@@ -30,20 +35,48 @@ public class Player2D {
     public void move(KeyHandler key){
         if (key.left_Pressed){
             direction = "left";
-            x -= speed;
+            if (x>=-15){
+                x -= speed;
+                if (System.currentTimeMillis()>nextFrameTime){
+                    animationPos++;
+                    nextFrameTime = System.currentTimeMillis() + animationFrameInterval;
+                    if (animationPos >=6){
+                        animationPos = 0;
+                    }
+                }
+            }else {
+                animationPos = 0;
+            }
         } else
         if (key.right_Pressed) {
             direction = "right";
-            x += speed;
-        } else if (key.use_Pressed) {
-            if(System.currentTimeMillis()>nextSkipTime){
-                use();
+            if (x<=1800){
+                x += speed;
+                if (System.currentTimeMillis()>nextFrameTime){
+                    animationPos++;
+                    nextFrameTime = System.currentTimeMillis() + animationFrameInterval;
+                    if (animationPos >=6){
+                        animationPos = 0;
+                    }
+                }
+            }else {
+                animationPos = 0;
             }
+        } else{
+            animationPos = 0;
+            if (key.use_Pressed) {
+                if(System.currentTimeMillis()>nextSkipTime){
+                    use();
+                }
+        }
         }
     }
     public void getImage(){
         try{
-            sprite = ImageIO.read(getClass().getResourceAsStream("/img/test.png"));
+            for (int i = 0; i < spriteRight.length; i++ ) {
+                spriteRight[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/mh_walking/" + i + ".png")));
+                spriteLeft[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/mh_walking/" + i + "-left.png")));
+            }
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -54,10 +87,14 @@ public class Player2D {
              gp.novelLevel.entities) {
             if (this.x >=  temp.x - temp.activationWidth/2 &&
                 this.x <=  temp.x + temp.activationWidth/2){
-                gp.isDialogue = true;
-                SpeakingEntity = temp;
-                SpeakingEntity.speak();
-                SpeakingEntity.incrementMsgCounter();
+                if (!temp.isTeleport){
+                    gp.isDialogue = true;
+                    SpeakingEntity = temp;
+                    SpeakingEntity.speak();
+                    SpeakingEntity.incrementMsgCounter();
+                }else{
+                    temp.speak();
+                }
             }
         }
 
@@ -65,7 +102,6 @@ public class Player2D {
     }
     public void skipMessage(KeyHandler keyHandler){
         if (keyHandler.use_Pressed){
-            //do something
             SpeakingEntity.speak();
             SpeakingEntity.incrementMsgCounter();
             if (SpeakingEntity.messageCounter == SpeakingEntity.dialogues.size()){
@@ -87,12 +123,12 @@ public class Player2D {
         BufferedImage image = null;
         switch (direction){
             case "left":
-                image = sprite;
+                image = spriteLeft[animationPos];
                 break;
             case "right":
-                image = sprite;
+                image = spriteRight[animationPos];
                 break;
         }
-        g2.drawImage(image,x,y,150,150,null);
+        g2.drawImage(image,x,y,200,550,null);
     }
 }

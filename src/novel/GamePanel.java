@@ -72,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable{
         novelLevel = new Level(this,1);
         player2d = new Player2D(this,keyHandler);
         mainMenu = new MainMenu(this);
-        this.addMouseListener(mainMenu);
+            this.addMouseListener(mainMenu);
         try {
             ui = new UI(this);
         } catch (IOException | FontFormatException e) {
@@ -101,6 +101,7 @@ public class GamePanel extends JPanel implements Runnable{
             case "mainmenu":
                 break;
             case "novel":
+                novelLevel.drawBG(g2);
                 break;
             case "dungeon":
                 break;
@@ -155,6 +156,16 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void loadNovelLevel(int levelID){
+        switch (levelID){
+            case 1:
+                player2d.x = 150;
+                player2d.y = 450;
+                break;
+            case 2:
+                player2d.x = 150;
+                player2d.y = 450;
+                break;
+        }
         novelLevel = new Level(this,levelID);
     }
 
