@@ -18,13 +18,10 @@ public class Player2D {
     double nextSkipTime = 0;
     double nextFrameTime = 0;
     Entity SpeakingEntity;
-
-    //TODO Спрайт - анимации
     public BufferedImage[] spriteRight = new BufferedImage[6];
     public BufferedImage[] spriteLeft = new BufferedImage[6];
-
-    // TODO Спрайты реагируют на сторону движения - отзеркаливание спрайтов
     public String direction = "right"; // left\right
+    public int[] estimatedCords;
 
     public Player2D(GamePanel gp, KeyHandler keyHandler){
         this.gp = gp;
@@ -130,5 +127,10 @@ public class Player2D {
                 break;
         }
         g2.drawImage(image,x,y,200,550,null);
+    }
+
+    public void tpOnLevelLoaded() {
+        this.x = estimatedCords[0];
+        this.y = estimatedCords[1];
     }
 }

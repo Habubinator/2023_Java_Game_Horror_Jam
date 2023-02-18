@@ -1,8 +1,11 @@
 package novel;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Entity {
     GamePanel gp;
@@ -15,6 +18,7 @@ public class Entity {
     int messageCounter = 0;
     boolean isTeleport;
     int locationId;
+    BufferedImage sprite;
 
     public Entity(GamePanel gp,String entityName, int x, int y,int activationWidth) {
         this.gp = gp;
@@ -24,6 +28,9 @@ public class Entity {
         this.activationWidth = activationWidth;
         this.dialogues = new ArrayList<>(3);
         addDialogues(entityName);
+        try {
+            sprite = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/point.png")));
+        } catch (IOException e) { throw new RuntimeException(e);}
     }
     public Entity(GamePanel gp,String entityName,int x, int y) {
         this.gp = gp;
@@ -32,6 +39,9 @@ public class Entity {
         this.y = y;
         this.dialogues = new ArrayList<>(3);
         addDialogues(entityName);
+        try {
+            sprite = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/point.png")));
+        } catch (IOException e) { throw new RuntimeException(e);}
     }
 
     public Entity(GamePanel gp,String entityName, int x, int y,int activationWidth, boolean isTeleport, int locationId) {
@@ -42,12 +52,16 @@ public class Entity {
         this.activationWidth = activationWidth;
         this.isTeleport = isTeleport;
         this.locationId = locationId;
+        try {
+            sprite = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/point.png")));
+        } catch (IOException e) { throw new RuntimeException(e);}
     }
 
     public void draw(Graphics2D g2){
         this.g2 = g2;
-        g2.setColor(Color.white);
-        g2.fillRoundRect(x,y,50,50,5,5);
+//        g2.setColor(Color.white);
+//        g2.fillRoundRect(x,y,50,50,5,5);
+        g2.drawImage(this.sprite,x,y,75,50,null);
     }
 
     public void addDialogues(String entityName){

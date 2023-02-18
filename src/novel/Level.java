@@ -24,12 +24,13 @@ public class Level {
         switch (id){
             case 1:
                 levelMode = roomDay;
-                entities.add(new Entity(gp,"test",350,700,350));
-                entities.add(new Entity(gp,"pc",1200,700,300));
-                entities.add(new Entity(gp,"teleport",1690,700,170,true,2));
+                entities.add(new Entity(gp,"test",300,760,600));
+                entities.add(new Entity(gp,"pc",1200,525,300));
+                entities.add(new Entity(gp,"teleport",1650,320,170,true,2));
                 break;
             case 2:
                 levelMode = outside;
+                entities.add(new Entity(gp,"teleport",75,450,200,true,1));
         }
     }
 

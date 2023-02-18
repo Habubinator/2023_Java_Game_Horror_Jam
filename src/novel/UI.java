@@ -15,6 +15,9 @@ public class UI {
     public String currentDialogue = "";
     public int blackScreenOpacity = 255;
     public boolean isScreenBlack = false;
+    public boolean levelLoading;
+    public int levelID;
+
     public UI(GamePanel gp) throws IOException, FontFormatException {
         this.gp = gp;
         dialogueFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/BadComic-Regular.otf"));
@@ -26,10 +29,21 @@ public class UI {
         blackScreen(g2);
         if (this.isScreenBlack){
             if (this.blackScreenOpacity<255){
-                blackScreenOpacity +=1;
+                blackScreenOpacity +=2;
             }
         }else if (this.blackScreenOpacity>=1){
-            blackScreenOpacity -= 1;
+            blackScreenOpacity -= 2;
+        }
+        if (this.blackScreenOpacity >=255){
+            this.blackScreenOpacity = 255;
+            if (this.levelLoading){
+                this.levelLoading = false;
+                this.isScreenBlack = false;
+                gp.player2d.tpOnLevelLoaded();
+                gp.novelLevel = new Level(gp,this.levelID);
+            }
+        }else if(this.blackScreenOpacity<0){
+            this.blackScreenOpacity = 0;
         }
     }
     public void blackScreen(Graphics2D g2){
