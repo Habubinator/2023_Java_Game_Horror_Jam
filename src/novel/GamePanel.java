@@ -156,17 +156,36 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void loadNovelLevel(int levelID){
-        ui.isScreenBlack = true;
-        ui.levelLoading = true;
+        int previousLevelID = ui.levelID;
         ui.levelID = levelID;
-        switch (levelID){
+        switch (previousLevelID){
             case 1:
-                player2d.estimatedCords = new int[]{1690,450};
+                switch(levelID){
+                    case 2:
+                        player2d.estimatedCords = new int[]{75,450};
+                        break;
+                }
                 break;
             case 2:
-                player2d.estimatedCords = new int[]{75,450};
+                switch (levelID){
+                    case 1:
+                        player2d.estimatedCords = new int[]{1690,450};
+                        break;
+                    case 3:
+                        player2d.estimatedCords = new int[]{75,450};
+                        break;
+                }
+                break;
+            case 3:
+                switch (levelID){
+                    case 2:
+                        player2d.estimatedCords = new int[]{1690,450};
+                        break;
+                }
                 break;
         }
+        ui.isScreenBlack = true;
+        ui.levelLoading = true;
     }
 
 }

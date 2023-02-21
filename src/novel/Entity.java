@@ -58,10 +58,12 @@ public class Entity {
     }
 
     public void draw(Graphics2D g2){
-        this.g2 = g2;
+        if (!this.isTeleport){
+            this.g2 = g2;
 //        g2.setColor(Color.white);
 //        g2.fillRoundRect(x,y,50,50,5,5);
-        g2.drawImage(this.sprite,x,y,75,50,null);
+            g2.drawImage(this.sprite,x,y,75,50,null);
+        }
     }
 
     public void addDialogues(String entityName){

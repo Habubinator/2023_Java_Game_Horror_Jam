@@ -21,7 +21,7 @@ public class Player2D {
     public BufferedImage[] spriteRight = new BufferedImage[6];
     public BufferedImage[] spriteLeft = new BufferedImage[6];
     public String direction = "right"; // left\right
-    public int[] estimatedCords;
+    public int[] estimatedCords = new int[]{75,450};
 
     public Player2D(GamePanel gp, KeyHandler keyHandler){
         this.gp = gp;
@@ -78,7 +78,7 @@ public class Player2D {
             e.printStackTrace();
         }
     }
-    // TODO Сделать диалоговые окна
+
     public void use(){
         for (Entity temp:
              gp.novelLevel.entities) {
