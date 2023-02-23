@@ -69,8 +69,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void start(){
         dungeon = new Dungeon(1, this, keyHandler);
-        novelLevel = new Level(this,1);
         player2d = new Player2D(this,keyHandler);
+        novelLevel = new Level(this,1);
         mainMenu = new MainMenu(this);
             this.addMouseListener(mainMenu);
         try {
@@ -78,6 +78,8 @@ public class GamePanel extends JPanel implements Runnable{
         } catch (IOException | FontFormatException e) {
             throw new RuntimeException(e);
         }
+        player2d.refleshTriggers();
+        player2d.use();
     }
 
     public void update(){

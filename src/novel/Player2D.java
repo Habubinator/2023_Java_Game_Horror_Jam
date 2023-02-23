@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Player2D {
@@ -22,6 +24,9 @@ public class Player2D {
     public BufferedImage[] spriteLeft = new BufferedImage[6];
     public String direction = "right"; // left\right
     public int[] estimatedCords = new int[]{75,450};
+    public  boolean isInScene = true;
+    Map<String, Boolean> isSceneTriggered = new HashMap<>();;
+    private String sceneName;
 
     public Player2D(GamePanel gp, KeyHandler keyHandler){
         this.gp = gp;
@@ -82,8 +87,8 @@ public class Player2D {
     public void use(){
         for (Entity temp:
              gp.novelLevel.entities) {
-            if (this.x >=  temp.x - temp.activationWidth/2 &&
-                this.x <=  temp.x + temp.activationWidth/2){
+            if (temp.entityName.equals(this.sceneName) || (this.x >=  temp.x - temp.activationWidth/2 &&
+                this.x <=  temp.x + temp.activationWidth/2)){
                 if (!temp.isTeleport){
                     gp.isDialogue = true;
                     SpeakingEntity = temp;
@@ -93,20 +98,42 @@ public class Player2D {
                     temp.speak();
                 }
             }
+            break;
         }
 
         nextSkipTime = System.currentTimeMillis() + dialogueInputInterval;
     }
+
     public void skipMessage(KeyHandler keyHandler){
         if (keyHandler.use_Pressed){
             SpeakingEntity.speak();
             SpeakingEntity.incrementMsgCounter();
             if (SpeakingEntity.messageCounter == SpeakingEntity.dialogues.size()){
+                if (isInScene){
+                    isInScene = false;
+                    gp.ui.isScreenBlack = false;
+                    isSceneTriggered.put(SpeakingEntity.entityName,true);
+                    gp.novelLevel.entities.remove(SpeakingEntity);
+                }
                 gp.isDialogue = false;
             }
             nextSkipTime = System.currentTimeMillis() + dialogueInputInterval;
         }
     }
+    
+    public void refleshTriggers(){
+        for (HashMap.Entry<String,Boolean> temp:
+                isSceneTriggered.entrySet()) {
+            if (!temp.getValue()){
+                this.sceneName = temp.getKey();
+            }
+        }
+    }
+
+    public void addTrigger(String name){
+        this.isSceneTriggered.put(name,false);
+    }
+
     public void update(){
         if (!gp.isDialogue && !gp.ui.isScreenBlack){
             move(keyHandler);
@@ -118,6 +145,7 @@ public class Player2D {
     }
     public void draw(Graphics2D g2){
         BufferedImage image = null;
+
         switch (direction){
             case "left":
                 image = spriteLeft[animationPos];

@@ -26,6 +26,8 @@ public class Level {
         switch (id){
             case 1:
                 levelMode = roomDay;
+                entities.add(new Entity(gp,"bedroom-1",-100,-100,1));
+                gp.player2d.addTrigger("bedroom-1");
                 entities.add(new Entity(gp,"test",300,760,600));
                 entities.add(new Entity(gp,"pc",1200,525,300));
                 entities.add(new Entity(gp,"teleport",1650,320,170,true,2));
@@ -46,7 +48,7 @@ public class Level {
         try {
             this.spriteRoomDay = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/room_background.png")));
             this.spriteOutside = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/outside_background.png")));
-            this.spriteClass = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/clasroom_background.png")));
+            this.spriteClass = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/class_dark_background.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -70,6 +72,9 @@ public class Level {
                 break;
             case classroom:
                 g2.drawImage(spriteClass,0,0,1920,1080,null);
+                Color col = new Color(0,0,0,20);
+                g2.setColor(col);
+                g2.fillRect(0,90,1980,900);
                 break;
 
         }

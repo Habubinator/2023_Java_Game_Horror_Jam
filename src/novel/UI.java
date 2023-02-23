@@ -14,7 +14,7 @@ public class UI {
     public String currentTalking = "";
     public String currentDialogue = "";
     public int blackScreenOpacity = 255;
-    public boolean isScreenBlack = false;
+    public boolean isScreenBlack = true;
     public boolean levelLoading;
     public int levelID;
 
@@ -91,5 +91,12 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(textStyle,fontSize));
         g2.setColor(color);
         g2.drawString(text,x,y);
+    }
+
+    public void makeScreenBlack(){
+        this.isScreenBlack = true;
+    }
+    public void makeScreenNotBlack(){
+        this.isScreenBlack = false;
     }
 }
