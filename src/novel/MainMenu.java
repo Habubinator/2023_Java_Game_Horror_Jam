@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -23,7 +24,7 @@ public class MainMenu implements MouseListener {
     public MainMenu(GamePanel gamePanel) {
         this.gp = gamePanel;
         try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/audio/menu_sound.wav")));
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/audio/menu_sound.wav"))));
             clip = AudioSystem.getClip();
             clip.open(ais);
             clip.setFramePosition(0);
