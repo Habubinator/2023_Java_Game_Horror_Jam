@@ -75,11 +75,9 @@ public class Entity {
     }
 
     public void addDialogues(String entityName){
-        File file = new File("src/novel/dialogues/"+entityName+"-dialogue.txt");
+        InputStream file = Objects.requireNonNull(getClass().getResourceAsStream("/novel/dialogues/"+entityName+"-dialogue.txt"));
         BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(file));
-        } catch (FileNotFoundException e) {throw new RuntimeException(e);}
+        br = new BufferedReader(new InputStreamReader(file));
         String st;
         while (true) {
             try {

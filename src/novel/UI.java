@@ -20,8 +20,10 @@ public class UI {
 
     public UI(GamePanel gp) throws IOException, FontFormatException {
         this.gp = gp;
-        dialogueFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/BadComic-Regular.otf"));
-        menuFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/Centaur.ttf"));
+        InputStream file = Objects.requireNonNull(getClass().getResourceAsStream("/fonts/BadComic-Regular.otf"));
+        dialogueFont = Font.createFont(Font.TRUETYPE_FONT, file);
+        file = Objects.requireNonNull(getClass().getResourceAsStream("/fonts/Centaur.ttf"));
+        menuFont = Font.createFont(Font.TRUETYPE_FONT, file);
     }
 
     public void draw(Graphics2D g2){

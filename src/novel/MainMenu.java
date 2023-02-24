@@ -23,8 +23,7 @@ public class MainMenu implements MouseListener {
     public MainMenu(GamePanel gamePanel) {
         this.gp = gamePanel;
         try {
-            URL file = new URL("file:src/audio/menu_sound.wav");
-            AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+            AudioInputStream ais = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/audio/menu_sound.wav")));
             clip = AudioSystem.getClip();
             clip.open(ais);
             clip.setFramePosition(0);
@@ -34,8 +33,8 @@ public class MainMenu implements MouseListener {
             throw new RuntimeException(e);
         }
         try {
-            bgimage = ImageIO.read(new File("src/img/main menu background.png"));
-            controls = ImageIO.read(new File("src/img/controls.png"));
+            bgimage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/main menu background.png")));
+            controls = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/controls.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

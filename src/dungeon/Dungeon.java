@@ -4,7 +4,9 @@ import novel.GamePanel;
 import novel.KeyHandler;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Dungeon {
     ArrayList<Tile> dungeonTiles = new ArrayList<>();
@@ -16,14 +18,12 @@ public class Dungeon {
 
     public Dungeon(int id, GamePanel gp, KeyHandler keyHandler){
         // Считывание файла карты данжа
-        File file = new File("src/dungeon/maps/map-"+id+".txt");
+        InputStream file = Objects.requireNonNull(getClass().getResourceAsStream("/dungeon/maps/map-"+id+".txt"));
         if (id == 1){
             // Инициализация игрока и считывание данных карты
             player = new Player(gp,keyHandler,this,1, 2, "North",null,null);
             BufferedReader br;
-            try {
-                br = new BufferedReader(new FileReader(file));
-            } catch (FileNotFoundException e) {throw new RuntimeException(e);}
+            br = new BufferedReader(new InputStreamReader(file, StandardCharsets.UTF_8));
             String st;
             while (true){
                 try {

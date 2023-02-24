@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="horror-jam:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/horror_jam_jar</output-path>
+    <root id="archive" name="Pandoras Cellar.jar">
+      <element id="module-output" name="horror-jam" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src" />
+      <element id="module-source" name="horror-jam" />
+    </root>
+  </artifact>
+</component>
