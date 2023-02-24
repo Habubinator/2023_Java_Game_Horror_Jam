@@ -1,1 +1,6 @@
-/Scene is working. <br> Pupukaka.
+You /Another sleepless night. <br> These nightmares have kept me awake for a long time.
+You /Lately all I can do is complain about it. <br> Maybe I should be more concerned and take some pills.
+You /Despite my insomnia I still have a lot of things to take care today.
+/You get up from bed and got dressed
+You /I hope there is no problem to be in school since the early morning.
+../..

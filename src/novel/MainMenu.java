@@ -17,6 +17,9 @@ import java.util.Objects;
 public class MainMenu implements MouseListener {
     GamePanel gp;
     Clip clip;
+    BufferedImage controls;
+    boolean isControlsPressed;
+    BufferedImage bgimage;
     public MainMenu(GamePanel gamePanel) {
         this.gp = gamePanel;
         try {
@@ -30,41 +33,46 @@ public class MainMenu implements MouseListener {
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             throw new RuntimeException(e);
         }
-
-    }
-
-    public void update() {
-    }
-
-    public void draw(Graphics2D g2) {
-        BufferedImage bgimage;
         try {
             bgimage = ImageIO.read(new File("src/img/main menu background.png"));
+            controls = ImageIO.read(new File("src/img/controls.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void update() {
+        if (gp.keyHandler.use_Pressed){
+            isControlsPressed = false;
+        }
+    }
+
+    public void draw(Graphics2D g2) {
         g2.drawImage(bgimage, 0, 0, null);
-        gp.ui.printText(g2,"Puzzle Cellar",876,375,gp.ui.menuFont, Font.PLAIN,48);
-        gp.ui.printText(g2,"Start",960,470, gp.ui.menuFont,Font.PLAIN,36);
-        gp.ui.printText(g2,"Controls",937,570, gp.ui.menuFont,Font.PLAIN,36);
-        gp.ui.printText(g2,"Quit",960,670, gp.ui.menuFont,Font.PLAIN,36);
+        gp.ui.printText(g2,"Pandora's Cellar",860,400,gp.ui.menuFont, Font.PLAIN,42);
+        gp.ui.printText(g2,"Start",960,480, gp.ui.menuFont,Font.PLAIN,36);
+        gp.ui.printText(g2,"Controls",937,580, gp.ui.menuFont,Font.PLAIN,36);
+        gp.ui.printText(g2,"Quit",960,680, gp.ui.menuFont,Font.PLAIN,36);
+        if (isControlsPressed){
+            g2.drawImage(controls,-50,0,null);
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (Objects.equals(gp.currentMode, gp.modeMainMenu)){
             if (e.getX() >= 960 && e.getX() <= 1025
-                    &&  e.getY() >= 450 && e.getY() <= 470){
+                    &&  e.getY() >= 455 && e.getY() <= 480){
                 gp.changeGameMode(1);
             }else
             if (e.getX() >= 940 && e.getX() <= 1050
-                    &&  e.getY() >= 545 && e.getY() <= 570){
-                System.out.println("Controls");
-                //TODO Add controls image
+                    &&  e.getY() >= 555 && e.getY() <= 580){
+                this.isControlsPressed = true;
+
             }
             else
             if (e.getX() >= 960 && e.getX() <= 1025
-                    &&  e.getY() >= 645 && e.getY() <= 670){
+                    &&  e.getY() >= 655 && e.getY() <= 680){
                 System.exit(0);
             }
         }

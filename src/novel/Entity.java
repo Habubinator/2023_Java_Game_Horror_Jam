@@ -19,6 +19,8 @@ public class Entity {
     boolean isTeleport;
     int locationId;
     BufferedImage sprite;
+    boolean isDialogueEndTriggered = false;
+    private boolean isDrawable = true;
 
     public Entity(GamePanel gp,String entityName, int x, int y,int activationWidth) {
         this.gp = gp;
@@ -62,8 +64,14 @@ public class Entity {
             this.g2 = g2;
 //        g2.setColor(Color.white);
 //        g2.fillRoundRect(x,y,50,50,5,5);
-            g2.drawImage(this.sprite,x,y,75,50,null);
+            if (isDrawable){
+                g2.drawImage(this.sprite,x,y,75,50,null);
+            }
         }
+    }
+
+    public void doNotDraw(){
+        this.isDrawable = false;
     }
 
     public void addDialogues(String entityName){
@@ -99,6 +107,13 @@ public class Entity {
             }
         }else{
             gp.loadNovelLevel(locationId);
+        }
+    }
+
+    public void onDialogueEnd() {
+        if (!isDialogueEndTriggered){
+            isDialogueEndTriggered = true;
+            //TODO конец диалога
         }
     }
 

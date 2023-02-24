@@ -34,12 +34,23 @@ public class Level {
                 break;
             case 2:
                 levelMode = outside;
-                entities.add(new Entity(gp,"teleport",75,450,200,true,1));
+                entities.add(new Entity(gp,"dontneedgothere",75,10000,200));
                 entities.add(new Entity(gp,"teleport",1700,320,200,true,3));
                 break;
             case 3:
                 levelMode = classroom;
-                entities.add(new Entity(gp,"teleport",75,450,200,true,2));
+                entities.add(new Entity(gp,"dontneedgothere",75,10000,200));
+                break;
+            case 4:
+                levelMode = classroom;
+                entities.add(new Entity(gp,"teleport",75,450,200,true,5));
+                break;
+            case 5:
+                levelMode = outside;
+                entities.add(new Entity(gp,"teleport",75,450,200,true,6));
+                break;
+            case 6:
+                levelMode = roomDay;
                 break;
         }
     }

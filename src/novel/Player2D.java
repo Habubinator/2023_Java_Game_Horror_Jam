@@ -87,8 +87,8 @@ public class Player2D {
     public void use(){
         for (Entity temp:
              gp.novelLevel.entities) {
-            if (temp.entityName.equals(this.sceneName) || (this.x >=  temp.x - temp.activationWidth/2 &&
-                this.x <=  temp.x + temp.activationWidth/2)){
+            if (temp.entityName.equals(this.sceneName) || this.x >=  temp.x - temp.activationWidth/2 &&
+                this.x <=  temp.x + temp.activationWidth/2){
                 if (!temp.isTeleport){
                     gp.isDialogue = true;
                     SpeakingEntity = temp;
@@ -97,8 +97,8 @@ public class Player2D {
                 }else{
                     temp.speak();
                 }
+                break;
             }
-            break;
         }
 
         nextSkipTime = System.currentTimeMillis() + dialogueInputInterval;
@@ -114,8 +114,12 @@ public class Player2D {
                     gp.ui.isScreenBlack = false;
                     isSceneTriggered.put(SpeakingEntity.entityName,true);
                     gp.novelLevel.entities.remove(SpeakingEntity);
+                    SpeakingEntity = null;
                 }
                 gp.isDialogue = false;
+                if (SpeakingEntity != null){
+                    SpeakingEntity.onDialogueEnd();
+                }
             }
             nextSkipTime = System.currentTimeMillis() + dialogueInputInterval;
         }
