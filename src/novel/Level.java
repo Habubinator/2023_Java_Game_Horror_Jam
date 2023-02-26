@@ -29,7 +29,7 @@ public class Level {
                 levelMode = roomDay;
                 entities.add(new Entity(gp,"bedroom-1",-100,-100,1));
                 gp.player2d.addTrigger("bedroom-1");
-                entities.add(new Entity(gp,"test",300,760,600));
+                entities.add(new Entity(gp,"bed",300,760,600));
                 entities.add(new Entity(gp,"pc",1200,525,300));
                 entities.add(new Entity(gp,"teleport",1650,320,170,true,2));
                 break;

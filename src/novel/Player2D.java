@@ -175,6 +175,20 @@ public class Player2D {
                 break;
         }
         g2.drawImage(image,x,y,200,550,null);
+        if (!gp.isDialogue){
+            for (Entity temp:
+                gp.novelLevel.entities){
+                if (this.x >=  temp.x - temp.activationWidth/2 &&
+                        this.x <=  temp.x + temp.activationWidth/2){
+                    String name = temp.entityName;
+                    if (temp.entityName.equals("teleport")||temp.entityName.equals("dontneedgothere")){
+                        name = "Go there";
+                    }
+                    gp.ui.drawItemsName(g2,name);
+                    break;
+                }
+            }
+        }
     }
 
     public void tpOnLevelLoaded() {
