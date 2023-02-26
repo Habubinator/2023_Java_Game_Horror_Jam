@@ -17,22 +17,13 @@ import java.util.Objects;
 
 public class MainMenu implements MouseListener {
     GamePanel gp;
-    Clip clip;
     BufferedImage controls;
     boolean isControlsPressed;
     BufferedImage bgimage;
     public MainMenu(GamePanel gamePanel) {
         this.gp = gamePanel;
-        try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/audio/menu_sound.wav"))));
-            clip = AudioSystem.getClip();
-            clip.open(ais);
-            clip.setFramePosition(0);
-            clip.start();
-            clip.loop(9999);
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        }
+        gp.sounds.menu_bg.start();
+        gp.sounds.menu_bg.loop(9999);
         try {
             bgimage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/main menu background.png")));
             controls = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/controls.png")));

@@ -1,6 +1,7 @@
 package novel;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -34,10 +35,13 @@ public class Level {
                 break;
             case 2:
                 levelMode = outside;
+                gp.sounds.outdoor_bg.start();
+                gp.sounds.outdoor_bg.loop(Clip.LOOP_CONTINUOUSLY);
                 entities.add(new Entity(gp,"dontneedgothere",75,10000,200));
                 entities.add(new Entity(gp,"teleport",1700,320,200,true,3));
                 break;
             case 3:
+                gp.sounds.outdoor_bg.stop();
                 levelMode = classroom;
                 entities.add(new Entity(gp,"dontneedgothere",75,10000,200));
                 break;

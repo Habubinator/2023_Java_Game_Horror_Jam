@@ -37,6 +37,10 @@ public class Player2D {
     public void move(KeyHandler key){
         if (key.left_Pressed){
             direction = "left";
+            if (gp.sounds.step.getFramePosition() >= gp.sounds.step.getFrameLength() - 47800){
+                gp.sounds.step.stop();
+                gp.sounds.step.setFramePosition(0);
+            }
             if (x>=-15){
                 x -= speed;
                 if (System.currentTimeMillis()>nextFrameTime){
@@ -44,14 +48,21 @@ public class Player2D {
                     nextFrameTime = System.currentTimeMillis() + animationFrameInterval;
                     if (animationPos >=6){
                         animationPos = 0;
+                        gp.sounds.step.start();
                     }
                 }
             }else {
                 animationPos = 0;
+                gp.sounds.step.stop();
+                gp.sounds.step.setFramePosition(0);
             }
         } else
         if (key.right_Pressed) {
             direction = "right";
+            if (gp.sounds.step.getFramePosition() >= gp.sounds.step.getFrameLength() - 47800){
+                gp.sounds.step.stop();
+                gp.sounds.step.setFramePosition(0);
+            }
             if (x<=1800){
                 x += speed;
                 if (System.currentTimeMillis()>nextFrameTime){
@@ -59,13 +70,18 @@ public class Player2D {
                     nextFrameTime = System.currentTimeMillis() + animationFrameInterval;
                     if (animationPos >=6){
                         animationPos = 0;
+                        gp.sounds.step.start();
                     }
                 }
             }else {
                 animationPos = 0;
+                gp.sounds.step.stop();
+                gp.sounds.step.setFramePosition(0);
             }
         } else{
             animationPos = 0;
+            gp.sounds.step.stop();
+            gp.sounds.step.setFramePosition(0);
             if (key.use_Pressed) {
                 if(System.currentTimeMillis()>nextSkipTime){
                     use();

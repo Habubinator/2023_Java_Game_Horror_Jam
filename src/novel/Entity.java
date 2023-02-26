@@ -104,7 +104,9 @@ public class Entity {
                 }
             }
         }else{
+            gp.sounds.door_open.start();
             gp.loadNovelLevel(locationId);
+            gp.sounds.door_open.setFramePosition(0);
         }
     }
 

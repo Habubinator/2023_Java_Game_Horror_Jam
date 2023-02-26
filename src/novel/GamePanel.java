@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable{
     String currentMode = modeMainMenu; // mainmenu - novel - dungeon
     Player2D player2d;
     UI ui;
+    Sounds sounds;
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -68,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void start(){
+        sounds = new Sounds(this);
         dungeon = new Dungeon(1, this, keyHandler);
         player2d = new Player2D(this,keyHandler);
         novelLevel = new Level(this,1);
@@ -149,7 +151,7 @@ public class GamePanel extends JPanel implements Runnable{
                 currentMode = modeMainMenu;
                 break;
             case 1:
-                mainMenu.clip.stop();
+                sounds.menu_bg.stop();
                 currentMode = modeNovel;
                 break;
             case 2:
