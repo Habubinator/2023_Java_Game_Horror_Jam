@@ -55,6 +55,7 @@ public class Level {
             }
             case 4 -> {
                 levelMode = classroom;
+                entities.add(new Entity(gp, "classmates", 1295, 10000, 670,"-1"));
                 entities.add(new Entity(gp, "teleport", 75, 450, 200, true, 5));
             }
             case 5 -> {
