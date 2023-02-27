@@ -9,16 +9,21 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Level {
+    long cutsceneTime;
     GamePanel gp;
     Graphics2D g2;
     int lvlID;
     final int roomDay = 1;
     final int outside = 2;
     final int classroom = 3;
+    final int onPc = 4;
+    final int creditThanks = 5;
     public int levelMode = roomDay;
     BufferedImage spriteRoomDay;
     BufferedImage spriteOutside;
     BufferedImage spriteClass;
+    BufferedImage spriteOnPc;
+    BufferedImage credits;
     ArrayList<Entity> entities = new ArrayList<>(3);
 
     public Level(GamePanel gp,int id){
@@ -61,15 +66,25 @@ public class Level {
             case 6 -> {
                 gp.sounds.outdoor_bg.stop();
                 levelMode = roomDay;
+                entities.add(new Entity(gp, "pc", 1200, 525, 300,"-1"));
+            }
+            case 7 -> {
+                levelMode = onPc;
+                this.cutsceneTime = System.currentTimeMillis();
+            }
+            case 8 ->{
+                levelMode = creditThanks;
+                entities.clear();
             }
         }
     }
-
     private void loadBackgrounds() {
         try {
             this.spriteRoomDay = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/room_background.png")));
             this.spriteOutside = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/outside_background.png")));
             this.spriteClass = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/class_dark_background.png")));
+            this.spriteOnPc = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/onpcbg.png")));
+            this.credits = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/credits.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -91,6 +106,9 @@ public class Level {
                 g2.setColor(col);
                 g2.fillRect(0, 90, 1980, 900);
             }
+            case onPc -> g2.drawImage(spriteOnPc, 0, 0, 1920, 1080, null);
+            case creditThanks -> g2.drawImage(credits, 0, 0, 1920, 1080, null);
+            default -> {}
         }
     }
 }

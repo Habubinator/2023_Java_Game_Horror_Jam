@@ -98,4 +98,7 @@ public class UI {
     public void drawItemsName(Graphics2D g2, String name){
         printText(g2,name.substring(0, 1).toUpperCase() + name.substring(1),25,1040,menuFont,Font.PLAIN,48);
     }
+    public void drawCredits(Graphics2D g2){
+
+    }
 }

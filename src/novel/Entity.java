@@ -22,6 +22,7 @@ public class Entity {
     BufferedImage sprite;
     boolean isDialogueEndTriggered = false;
     String subtext = null;
+    String gameName;
 
     public Entity(GamePanel gp,String entityName, int x, int y,int activationWidth) {
         this.gp = gp;
@@ -72,6 +73,7 @@ public class Entity {
 
     public void addDialogues(String entityName){
         InputStream file = Objects.requireNonNull(getClass().getResourceAsStream("/novel/dialogues/"+entityName+"-dialogue.txt"));
+        this.gameName = entityName;
         BufferedReader br;
         br = new BufferedReader(new InputStreamReader(file));
         String st;
@@ -126,6 +128,10 @@ public class Entity {
             }
             if ("Wait till the lesson start".equals(entityName)) {
                 gp.loadNovelLevel(gp.novelLevel.lvlID +1);
+            }
+            if ("pc-1".equals(gameName)) {
+                gp.loadNovelLevel(gp.novelLevel.lvlID +1);
+                gp.ui.isScreenBlack = true;
             }
         }
     }

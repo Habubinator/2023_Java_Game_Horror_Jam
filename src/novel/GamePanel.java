@@ -2,6 +2,7 @@ package novel;
 
 import dungeon.Dungeon;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{
     Player2D player2d;
     UI ui;
     Sounds sounds;
-    boolean debugMode = true;
+    boolean debugMode = false;
     double nextDebugSkipTime = 0;
     double DebugSkipInterval = 400;
     public GamePanel(){
@@ -101,6 +102,18 @@ public class GamePanel extends JPanel implements Runnable{
                         }
                     }
                 }
+                if (novelLevel.lvlID == 7){
+                    if (System.currentTimeMillis() >= novelLevel.cutsceneTime+2000){
+                        loadNovelLevel(novelLevel.lvlID+1);
+                    }
+                }
+                if (novelLevel.levelMode == 5){
+                    if (keyHandler.use_Pressed){
+                        changeGameMode(0);
+                        sounds.menu_bg.start();
+                        sounds.menu_bg.loop(Clip.LOOP_CONTINUOUSLY);
+                    }
+                }
             }
             case "dungeon" -> dungeon.player.update();
         }
@@ -162,6 +175,7 @@ public class GamePanel extends JPanel implements Runnable{
         ui.levelID = levelID;
         switch (novelLevel.lvlID){
             case 0:
+            case 7:
                 break;
             case 1:
             case 2:
@@ -172,8 +186,10 @@ public class GamePanel extends JPanel implements Runnable{
                 break;
             case 4:
             case 5:
-            case 6:
                 player2d.estimatedCords = new int[]{1690,450};
+                break;
+            case 6:
+                player2d.estimatedCords = new int[]{150,5000};
                 break;
         }
         ui.isScreenBlack = true;
