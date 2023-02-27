@@ -1,9 +1,11 @@
 package novel;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -14,12 +16,12 @@ public class Entity {
     int y;
     int activationWidth = 160;
     ArrayList<String> dialogues;
-    Graphics2D g2;
     int messageCounter = 0;
     boolean isTeleport;
     int locationId;
     BufferedImage sprite;
     boolean isDialogueEndTriggered = false;
+    String subtext = null;
 
     public Entity(GamePanel gp,String entityName, int x, int y,int activationWidth) {
         this.gp = gp;
@@ -29,6 +31,19 @@ public class Entity {
         this.activationWidth = activationWidth;
         this.dialogues = new ArrayList<>(3);
         addDialogues(entityName);
+        try {
+            sprite = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/point.png")));
+        } catch (IOException e) { throw new RuntimeException(e);}
+    }
+    public Entity(GamePanel gp,String entityName, int x, int y,int activationWidth, String subtext) {
+        this.gp = gp;
+        this.entityName = entityName;
+        this.x = x;
+        this.y = y;
+        this.activationWidth = activationWidth;
+        this.dialogues = new ArrayList<>(3);
+        this.subtext = subtext;
+        addDialogues(entityName+subtext);
         try {
             sprite = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/point.png")));
         } catch (IOException e) { throw new RuntimeException(e);}
@@ -55,9 +70,6 @@ public class Entity {
         this.locationId = locationId;
     }
 
-    public void draw(Graphics2D g2){
-    }
-
     public void addDialogues(String entityName){
         InputStream file = Objects.requireNonNull(getClass().getResourceAsStream("/novel/dialogues/"+entityName+"-dialogue.txt"));
         BufferedReader br;
@@ -78,9 +90,7 @@ public class Entity {
             if (!dialogues.isEmpty()){
                 gp.ui.isSoundMade = false;
                 try {
-                    if (this.entityName.equals("Wait till the lesson start")){
-                        gp.ui.isScreenBlack = true;
-                    }
+                    onDialogueStart();
                     String[] text = dialogues.get(this.messageCounter).split("/");
                     gp.ui.currentTalking = text[0];
                     gp.ui.currentDialogue = text[1];
@@ -95,6 +105,12 @@ public class Entity {
             gp.sounds.door_open.start();
             gp.loadNovelLevel(locationId);
             gp.sounds.door_open.setFramePosition(0);
+        }
+    }
+
+    private void onDialogueStart() {
+        if (this.entityName.equals("Wait till the lesson start")){
+            gp.ui.isScreenBlack = true;
         }
     }
 

@@ -94,12 +94,6 @@ public class UI {
         g2.setColor(Color.WHITE);
         g2.drawString(text,x,y);
     }
-    public void printText(Graphics2D g2,String text, int x, int y, Font font, int textStyle, int fontSize, Color color) {
-        g2.setFont(font);
-        g2.setFont(g2.getFont().deriveFont(textStyle,fontSize));
-        g2.setColor(color);
-        g2.drawString(text,x,y);
-    }
 
     public void drawItemsName(Graphics2D g2, String name){
         printText(g2,name.substring(0, 1).toUpperCase() + name.substring(1),25,1040,menuFont,Font.PLAIN,48);

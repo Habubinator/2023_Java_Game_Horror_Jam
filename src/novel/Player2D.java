@@ -25,7 +25,7 @@ public class Player2D {
     public String direction = "right"; // left\right
     public int[] estimatedCords = new int[]{75,450};
     public  boolean isInScene = true;
-    Map<String, Boolean> isSceneTriggered = new HashMap<>();;
+    Map<String, Boolean> isSceneTriggered = new HashMap<>();
     String sceneName;
 
     public Player2D(GamePanel gp, KeyHandler keyHandler){
@@ -139,7 +139,7 @@ public class Player2D {
         }
     }
     
-    public void refleshTriggers(){
+    public void refreshTriggers(){
         for (HashMap.Entry<String,Boolean> temp:
                 isSceneTriggered.entrySet()) {
             if (!temp.getValue()){
@@ -150,7 +150,7 @@ public class Player2D {
 
     public void addTrigger(String name){
         this.isSceneTriggered.put(name,false);
-        refleshTriggers();
+        refreshTriggers();
     }
 
     public void update(){
@@ -163,16 +163,12 @@ public class Player2D {
         }
     }
     public void draw(Graphics2D g2){
-        BufferedImage image = null;
+        BufferedImage image = switch (direction) {
+            case "left" -> spriteLeft[animationPos];
+            case "right" -> spriteRight[animationPos];
+            default -> null;
+        };
 
-        switch (direction){
-            case "left":
-                image = spriteLeft[animationPos];
-                break;
-            case "right":
-                image = spriteRight[animationPos];
-                break;
-        }
         g2.drawImage(image,x,y,200,550,null);
         if (!gp.isDialogue){
             for (Entity temp:
