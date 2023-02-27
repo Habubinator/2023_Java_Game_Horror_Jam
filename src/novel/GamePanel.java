@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{
     Player2D player2d;
     UI ui;
     Sounds sounds;
-    boolean debugMode = true;
+    boolean debugMode = false;
     double nextDebugSkipTime = 0;
     double DebugSkipInterval = 400;
     public GamePanel(){
