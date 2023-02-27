@@ -20,7 +20,6 @@ public class Entity {
     int locationId;
     BufferedImage sprite;
     boolean isDialogueEndTriggered = false;
-    private boolean isDrawable = true;
 
     public Entity(GamePanel gp,String entityName, int x, int y,int activationWidth) {
         this.gp = gp;
@@ -77,7 +76,11 @@ public class Entity {
     public void speak() {
         if (!isTeleport){
             if (!dialogues.isEmpty()){
+                gp.ui.isSoundMade = false;
                 try {
+                    if (this.entityName.equals("Wait till the lesson start")){
+                        gp.ui.isScreenBlack = true;
+                    }
                     String[] text = dialogues.get(this.messageCounter).split("/");
                     gp.ui.currentTalking = text[0];
                     gp.ui.currentDialogue = text[1];
@@ -98,7 +101,16 @@ public class Entity {
     public void onDialogueEnd() {
         if (!isDialogueEndTriggered){
             isDialogueEndTriggered = true;
-            //TODO конец диалога
+            if ("bedroom-1".equals(entityName)){
+                gp.novelLevel.entities.remove(this);
+            }
+            if ("classmates".equals(entityName)) {
+                gp.novelLevel.entities.removeIf(temp -> temp.entityName.equals("desk"));
+                gp.novelLevel.entities.add(new Entity(gp, "Wait till the lesson start", 315, 10000, 290));
+            }
+            if ("Wait till the lesson start".equals(entityName)) {
+                gp.loadNovelLevel(gp.novelLevel.lvlID +1);
+            }
         }
     }
 

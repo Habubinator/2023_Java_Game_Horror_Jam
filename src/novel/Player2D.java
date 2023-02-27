@@ -26,7 +26,7 @@ public class Player2D {
     public int[] estimatedCords = new int[]{75,450};
     public  boolean isInScene = true;
     Map<String, Boolean> isSceneTriggered = new HashMap<>();;
-    private String sceneName;
+    String sceneName;
 
     public Player2D(GamePanel gp, KeyHandler keyHandler){
         this.gp = gp;
@@ -129,13 +129,11 @@ public class Player2D {
                     isInScene = false;
                     gp.ui.isScreenBlack = false;
                     isSceneTriggered.put(SpeakingEntity.entityName,true);
-                    gp.novelLevel.entities.remove(SpeakingEntity);
-                    SpeakingEntity = null;
                 }
                 gp.isDialogue = false;
-                if (SpeakingEntity != null){
-                    SpeakingEntity.onDialogueEnd();
-                }
+            }
+            if (SpeakingEntity.messageCounter >= SpeakingEntity.dialogues.size()){
+                SpeakingEntity.onDialogueEnd();
             }
             nextSkipTime = System.currentTimeMillis() + dialogueInputInterval;
         }
@@ -152,6 +150,7 @@ public class Player2D {
 
     public void addTrigger(String name){
         this.isSceneTriggered.put(name,false);
+        refleshTriggers();
     }
 
     public void update(){

@@ -1,7 +1,6 @@
 package novel;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -17,6 +16,8 @@ public class UI {
     public boolean isScreenBlack = true;
     public boolean levelLoading;
     public int levelID;
+    public boolean isSoundMade;
+
 
     public UI(GamePanel gp) throws IOException, FontFormatException {
         this.gp = gp;
@@ -70,6 +71,11 @@ public class UI {
             g2.drawString(line,x,y);
             y += 50;
         }
+        if (!this.isSoundMade){
+            gp.sounds.click.start();
+            gp.sounds.click.setFramePosition(0);
+            isSoundMade = true;
+        }
     }
     public void drawSubWindow(int x, int y, int width, int height){
         Color c = new Color(0,0,0,160);
@@ -93,13 +99,6 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(textStyle,fontSize));
         g2.setColor(color);
         g2.drawString(text,x,y);
-    }
-
-    public void makeScreenBlack(){
-        this.isScreenBlack = true;
-    }
-    public void makeScreenNotBlack(){
-        this.isScreenBlack = false;
     }
 
     public void drawItemsName(Graphics2D g2, String name){

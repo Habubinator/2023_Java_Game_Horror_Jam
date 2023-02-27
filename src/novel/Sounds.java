@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Sounds implements LineListener{
+    Clip click;
     GamePanel gp;
     AudioInputStream ais;
     Clip menu_bg;
@@ -36,6 +37,10 @@ public class Sounds implements LineListener{
             step.setFramePosition(0);
             FloatControl gainControl2 = (FloatControl) step.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl2.setValue(-7.5f);
+            ais = AudioSystem.getAudioInputStream(new BufferedInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/audio/click.wav"))));
+            click = AudioSystem.getClip();
+            click.open(ais);
+            click.setFramePosition(0);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) { throw new RuntimeException(e);}
     }
 
