@@ -54,24 +54,9 @@ public class Entity {
         this.activationWidth = activationWidth;
         this.isTeleport = isTeleport;
         this.locationId = locationId;
-        try {
-            sprite = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/img/point.png")));
-        } catch (IOException e) { throw new RuntimeException(e);}
     }
 
     public void draw(Graphics2D g2){
-        if (!this.isTeleport){
-            this.g2 = g2;
-//        g2.setColor(Color.white);
-//        g2.fillRoundRect(x,y,50,50,5,5);
-            if (isDrawable){
-                g2.drawImage(this.sprite,x,y,75,50,null);
-            }
-        }
-    }
-
-    public void doNotDraw(){
-        this.isDrawable = false;
     }
 
     public void addDialogues(String entityName){

@@ -30,7 +30,9 @@ public class GamePanel extends JPanel implements Runnable{
     Player2D player2d;
     UI ui;
     Sounds sounds;
-
+    boolean debugMode = true;
+    double nextDebugSkipTime = 0;
+    double DebugSkipInterval = 400;
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -85,12 +87,26 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
+        if (this.debugMode){
+            if (keyHandler.exit){
+                System.exit(0);
+            }
+        }
         switch (currentMode){
             case "mainmenu":
                 mainMenu.update();
                 break;
             case "novel":
                 player2d.update();
+                if (this.debugMode){
+                    if (keyHandler.skip){
+                        if (System.currentTimeMillis() > nextDebugSkipTime){
+                            isDialogue = false;
+                            loadNovelLevel(novelLevel.lvlID+1);
+                            nextDebugSkipTime = System.currentTimeMillis() + DebugSkipInterval;
+                        }
+                    }
+                }
                 break;
             case "dungeon":
                 dungeon.player.update();
@@ -160,32 +176,27 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void loadNovelLevel(int levelID){
-        int previousLevelID = ui.levelID;
         ui.levelID = levelID;
-        switch (previousLevelID){
+        switch (novelLevel.lvlID){
+            case 0:
+                break;
             case 1:
-                switch(levelID){
-                    case 2:
-                        player2d.estimatedCords = new int[]{75,450};
-                        break;
-                }
+                player2d.estimatedCords = new int[]{75,450};
                 break;
             case 2:
-                switch (levelID){
-                    case 1:
-                        player2d.estimatedCords = new int[]{1690,450};
-                        break;
-                    case 3:
-                        player2d.estimatedCords = new int[]{75,450};
-                        break;
-                }
+                player2d.estimatedCords = new int[]{75,450};
                 break;
             case 3:
-                switch (levelID){
-                    case 2:
-                        player2d.estimatedCords = new int[]{1690,450};
-                        break;
-                }
+                player2d.estimatedCords = new int[]{player2d.x,player2d.y};
+                break;
+            case 4:
+                player2d.estimatedCords = new int[]{1690,450};
+                break;
+            case 5:
+                player2d.estimatedCords = new int[]{1690,450};
+                break;
+            case 6:
+                player2d.estimatedCords = new int[]{1690,450};
                 break;
         }
         ui.isScreenBlack = true;

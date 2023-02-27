@@ -12,6 +12,7 @@ import java.util.Objects;
 public class Level {
     GamePanel gp;
     Graphics2D g2;
+    int lvlID;
     final int roomDay = 1;
     final int outside = 2;
     final int classroom = 3;
@@ -23,6 +24,7 @@ public class Level {
 
     public Level(GamePanel gp,int id){
         this.gp = gp;
+        this.lvlID = id;
         loadBackgrounds();
         switch (id){
             case 1:
@@ -31,19 +33,21 @@ public class Level {
                 gp.player2d.addTrigger("bedroom-1");
                 entities.add(new Entity(gp,"bed",300,760,600));
                 entities.add(new Entity(gp,"pc",1200,525,300));
-                entities.add(new Entity(gp,"teleport",1650,320,170,true,2));
+                entities.add(new Entity(gp,"teleport",1650,320,200,true,2));
                 break;
             case 2:
                 levelMode = outside;
                 gp.sounds.outdoor_bg.start();
                 gp.sounds.outdoor_bg.loop(Clip.LOOP_CONTINUOUSLY);
                 entities.add(new Entity(gp,"dontneedgothere",75,10000,200));
-                entities.add(new Entity(gp,"teleport",1700,320,200,true,3));
+                entities.add(new Entity(gp,"teleport",1700,320,230,true,3));
                 break;
             case 3:
                 gp.sounds.outdoor_bg.stop();
                 levelMode = classroom;
-                entities.add(new Entity(gp,"dontneedgothere",75,10000,200));
+                entities.add(new Entity(gp,"dontneedgothere",10,10000,100));
+                entities.add(new Entity(gp,"desk",315,10000,290));
+                entities.add(new Entity(gp,"classmates",1295,10000,670));
                 break;
             case 4:
                 levelMode = classroom;
@@ -51,9 +55,12 @@ public class Level {
                 break;
             case 5:
                 levelMode = outside;
+                gp.sounds.outdoor_bg.start();
+                gp.sounds.outdoor_bg.loop(Clip.LOOP_CONTINUOUSLY);
                 entities.add(new Entity(gp,"teleport",75,450,200,true,6));
                 break;
             case 6:
+                gp.sounds.outdoor_bg.stop();
                 levelMode = roomDay;
                 break;
         }
