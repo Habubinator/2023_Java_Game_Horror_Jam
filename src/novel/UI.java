@@ -40,10 +40,10 @@ public class UI {
         if (this.blackScreenOpacity >=255){
             this.blackScreenOpacity = 255;
             if (this.levelLoading){
-                this.levelLoading = false;
                 this.isScreenBlack = false;
                 gp.player2d.tpOnLevelLoaded();
                 gp.novelLevel = new Level(gp,this.levelID);
+                this.levelLoading = false;
             }
         }else if(this.blackScreenOpacity<0){
             this.blackScreenOpacity = 0;

@@ -131,7 +131,10 @@ public class Entity {
             }
             if ("pc-1".equals(gameName)) {
                 gp.loadNovelLevel(gp.novelLevel.lvlID +1);
-                gp.ui.isScreenBlack = true;
+            }
+        }else {
+            if (gp.novelLevel.lvlID != 6){
+                gp.ui.isScreenBlack = false;
             }
         }
     }

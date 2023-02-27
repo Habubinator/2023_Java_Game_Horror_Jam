@@ -30,6 +30,9 @@ public class Level {
         this.gp = gp;
         this.lvlID = id;
         loadBackgrounds();
+        if (id != 1){
+            gp.ui.isScreenBlack = false;
+        }
         switch (id) {
             case 1 -> {
                 levelMode = roomDay;

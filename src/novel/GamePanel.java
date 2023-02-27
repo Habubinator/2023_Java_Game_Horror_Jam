@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{
     Player2D player2d;
     UI ui;
     Sounds sounds;
-    boolean debugMode = false;
+    boolean debugMode = true;
     double nextDebugSkipTime = 0;
     double DebugSkipInterval = 400;
     public GamePanel(){
@@ -99,6 +99,15 @@ public class GamePanel extends JPanel implements Runnable{
                             isDialogue = false;
                             loadNovelLevel(novelLevel.lvlID + 1);
                             nextDebugSkipTime = System.currentTimeMillis() + DebugSkipInterval;
+                        }
+                    }
+                }
+                if (novelLevel.lvlID == 4 || novelLevel.lvlID == 3){
+                    if (ui.blackScreenOpacity >=250){
+                        novelLevel.cutsceneTime = System.currentTimeMillis();
+                        if (System.currentTimeMillis()>=novelLevel.cutsceneTime +1500){
+                            ui.isScreenBlack = true;
+                            ui.blackScreenOpacity = 0;
                         }
                     }
                 }
